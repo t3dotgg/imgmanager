@@ -15,7 +15,7 @@ const TopNavLayout = ({ children }: { children: React.ReactNode }) => {
           </SignedIn>
         </nav>
       </header>
-      <main className="container mx-auto flex-grow px-4 py-8">{children}</main>
+      <main className="container mx-auto flex-grow">{children}</main>
     </div>
   );
 };

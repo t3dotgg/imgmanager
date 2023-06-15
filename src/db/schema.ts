@@ -5,6 +5,7 @@ import {
   mysqlTable,
   serial,
   uniqueIndex,
+  index,
   varchar,
   timestamp,
 } from "drizzle-orm/mysql-core";
@@ -29,7 +30,7 @@ export const uploadedImage = mysqlTable(
     removedBgUrl: varchar("transparentUrl", { length: 800 }),
   },
   (randomNumber) => ({
-    numberIndex: uniqueIndex("file_key_IDX").on(randomNumber.fileKey),
-    userIdIndex: uniqueIndex("user_id_index").on(randomNumber.userId),
+    fileKeyIndex: uniqueIndex("file_key_IDX").on(randomNumber.fileKey),
+    userIdIndex: index("user_id_index").on(randomNumber.userId),
   })
 );
