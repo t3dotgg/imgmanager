@@ -4,6 +4,31 @@ import { SignInButton, SignedIn, SignedOut, auth } from "@clerk/nextjs";
 import { desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import ImageUploadButton from "./_components/upload-button";
+import { uploadTransparent } from "./api/uploadthing/core";
+
+async function testTransparentUploader() {
+  "use server";
+  const resp = await uploadTransparent(
+    "https://uploadthing.com/f/69a8188c-181b-49be-8972-2cdd26c474eb_P1000035-0038.jpg"
+  );
+  return resp;
+}
+
+function TestForm() {
+  return (
+    <form
+      action={testTransparentUploader}
+      className="flex flex-col items-center"
+    >
+      <button
+        type="submit"
+        className="rounded border-2 bg-green-700 p-2 px-4 hover:bg-green-600"
+      >
+        Test
+      </button>
+    </form>
+  );
+}
 
 const getImagesForUser = async () => {
   const user = await auth();
@@ -23,7 +48,7 @@ const MagicImageRender = ({ image }: { image: ImageFromDb }) => {
   return (
     <div className="flex w-56 items-center justify-center">
       <img
-        src={image.originalUrl ?? ""}
+        src={image.removedBgUrl ?? image.originalUrl ?? ""}
         alt={image.originalName}
         className="w-full"
       />
@@ -59,6 +84,7 @@ export default async function Home() {
         <SignInButton />
       </SignedOut>
       <SignedIn>
+        <TestForm />
         <ImageUploadButton />
         <Images />
       </SignedIn>
