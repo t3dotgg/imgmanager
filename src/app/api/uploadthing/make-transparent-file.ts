@@ -1,3 +1,5 @@
+// TODO: Handle `File` polyfilling for Node <20 support
+
 import { Readable } from "stream";
 import { DANGEROUS__uploadFiles } from "uploadthing/client";
 
@@ -57,6 +59,8 @@ export const uploadTransparent = async (url: string) => {
   const uploadedFiles = await DANGEROUS__uploadFiles(
     [f],
     "transparentUploader",
+
+    // TODO: Make this unnecessary
     {
       url:
         (process.env.VERCEL_URL ?? "http://localhost:3000") +
