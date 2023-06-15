@@ -2,6 +2,7 @@
 
 import { Readable } from "stream";
 import { DANGEROUS__uploadFiles } from "uploadthing/client";
+import { File, Blob } from "web-file-polyfill";
 
 function streamToBlob(stream: any, mimeType: any): any {
   if (mimeType != null && typeof mimeType !== "string") {
