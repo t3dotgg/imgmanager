@@ -2,13 +2,15 @@
 // https://orm.drizzle.team/docs/sql-schema-declaration
 
 import {
-  mysqlTable,
   serial,
   uniqueIndex,
   index,
   varchar,
   timestamp,
+  mysqlTableCreator,
 } from "drizzle-orm/mysql-core";
+
+const mysqlTable = mysqlTableCreator((name) => `project1_${name}`);
 
 // declaring enum in database
 export const uploadedImage = mysqlTable(

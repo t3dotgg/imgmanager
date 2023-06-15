@@ -10,5 +10,7 @@ dotenv.config();
 
 export default {
   schema: "./src/db/schema.ts",
+  out: "./drizzle",
   connectionString: process.env.DATABASE_URL,
+  tablesFilter: "_project1_*",
 } satisfies Config;
