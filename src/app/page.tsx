@@ -9,14 +9,12 @@ async function Images() {
     return <div className="text-2xl">Upload something</div>;
 
   return (
-    <div className="flex flex-col items-center justify-center gap-2">
-      <div className="flex flex-wrap justify-center gap-2">
-        {data.map((rn) => (
-          <div key={rn.id} className="flex justify-between">
-            <MagicImageRender image={rn} />
-          </div>
-        ))}
-      </div>
+    <div className="grid w-full grid-cols-fluid justify-items-center">
+      {data.map((rn) => (
+        <div key={rn.id} className="flex justify-between">
+          <MagicImageRender image={rn} />
+        </div>
+      ))}
     </div>
   );
 }

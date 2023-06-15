@@ -6,7 +6,7 @@ const TopNavLayout = ({ children }: { children: React.ReactNode }) => {
     <div className="flex min-h-screen flex-col">
       <header className="border-b">
         <nav className="container mx-auto flex justify-between px-4 py-4">
-          <span className="text-2xl font-bold">T3 Future</span>
+          <span className="text-2xl font-bold">imgthing</span>
           <SignedOut>
             <SignInButton />
           </SignedOut>

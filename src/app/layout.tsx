@@ -4,8 +4,8 @@ import { ClerkProvider } from "@clerk/nextjs";
 import TopNavLayout from "./_components/topnav";
 
 export const metadata = {
-  title: "T3 Future",
-  description: "Project started by t3-future",
+  title: "ImgThing",
+  description: "A Thing For Images",
 };
 
 export default function RootLayout({
