@@ -54,10 +54,16 @@ export const uploadTransparent = async (url: string) => {
 
   const blobFromBody: Blob = await streamToBlob(r, "image/png");
 
-  const f = new File([blobFromBody], "transparent.png", { type: "image/png" });
+  const mockFile = Object.assign(
+    {},
+    blobFromBody,
+    {
+      name: "transparent.png",
+    }
+  ) as File;
 
   const uploadedFiles = await DANGEROUS__uploadFiles(
-    [f],
+    [mockFile],
     "transparentUploader",
 
     // TODO: Make this unnecessary
