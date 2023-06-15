@@ -6,16 +6,30 @@ import {
   serial,
   uniqueIndex,
   varchar,
+  timestamp,
 } from "drizzle-orm/mysql-core";
 
 // declaring enum in database
-export const randomNumber = mysqlTable(
-  "random_numbers",
+export const uploadedImage = mysqlTable(
+  "uploaded_image",
   {
     id: serial("id").primaryKey(),
-    number: varchar("number", { length: 256 }),
+
+    // Always useful info
+    createdAt: timestamp("createdAt").defaultNow(),
+    completedAt: timestamp("completedAt"),
+    userId: varchar("userId", { length: 256 }).notNull(),
+
+    // "on upload start" info
+    originalName: varchar("original_name", { length: 256 }).notNull(),
+    fileKey: varchar("file_key", { length: 256 }).notNull(),
+
+    // Added afterwards
+    originalUrl: varchar("ogUrl", { length: 800 }),
+    removedBgUrl: varchar("transparentUrl", { length: 800 }),
   },
   (randomNumber) => ({
-    numberIndex: uniqueIndex("number_idx").on(randomNumber.number),
+    numberIndex: uniqueIndex("file_key_IDX").on(randomNumber.fileKey),
+    userIdIndex: uniqueIndex("user_id_index").on(randomNumber.userId),
   })
 );
