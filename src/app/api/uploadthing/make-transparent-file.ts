@@ -4,7 +4,7 @@ import { Readable } from "stream";
 import { DANGEROUS__uploadFiles } from "uploadthing/client";
 
 export const uploadTransparent = async (url: string) => {
-  if (!process.env.REMOVEBG_KEY) throw new Error("No removebg key");
+  // if (!process.env.REMOVEBG_KEY) throw new Error("No removebg key");
 
   const formData = new FormData();
   formData.append("size", "auto");
