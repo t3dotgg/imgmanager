@@ -38,16 +38,11 @@ export const uploadTransparent = async (url: string) => {
     type: "image/png",
   });
 
+  const baseUrl = process.env.VERCEL_URL ?? "http://localhost:3000";
   const uploadedFiles = await DANGEROUS__uploadFiles(
     [f],
     "transparentUploader",
-
-    // TODO: Make this unnecessary
-    {
-      url:
-        (process.env.VERCEL_URL ?? "http://localhost:3000") +
-        "/api/uploadthing",
-    }
+    { url: baseUrl + "/api/uploadthing" }
   );
   return uploadedFiles[0];
 };
