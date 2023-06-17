@@ -1,26 +1,8 @@
-// TODO: Handle `File` polyfilling for Node <20 support
+import "./polyfill";
+import { blob } from "node:stream/consumers";
 
 import { Readable } from "stream";
 import { DANGEROUS__uploadFiles } from "uploadthing/client";
-
-function streamToBlob(stream: any, mimeType: any): any {
-  if (mimeType != null && typeof mimeType !== "string") {
-    throw new Error("Invalid mimetype, expected string.");
-  }
-  return new Promise((resolve, reject) => {
-    const chunks: any[] = [];
-    stream
-      .on("data", (chunk: any) => chunks.push(chunk))
-      .once("end", () => {
-        const blob =
-          mimeType != null
-            ? new Blob(chunks, { type: mimeType })
-            : new Blob(chunks);
-        resolve(blob);
-      })
-      .once("error", reject);
-  });
-}
 
 export const uploadTransparent = async (url: string) => {
   if (!process.env.REMOVEBG_KEY) throw new Error("No removebg key");
@@ -50,14 +32,13 @@ export const uploadTransparent = async (url: string) => {
 
   const r = Readable.fromWeb(body as any);
 
-  console.log("body?", body);
-
-  const blobFromBody: Blob = await streamToBlob(r, "image/png");
-
-  const f = new File([blobFromBody], "transparent.png", { type: "image/png" });
+  const fileBlob = await blob(r);
+  const mockFile = new File([fileBlob as any], "transparent.png", {
+    type: "image/png",
+  });
 
   const uploadedFiles = await DANGEROUS__uploadFiles(
-    [f],
+    [mockFile],
     "transparentUploader",
 
     // TODO: Make this unnecessary
