@@ -20,7 +20,6 @@ export const uploadTransparent = async (url: string) => {
     next: {
       revalidate: 0,
     },
-    cache: "no-cache",
   });
 
   // Use this in dev when debugging
