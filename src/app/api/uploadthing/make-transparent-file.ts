@@ -44,8 +44,9 @@ export const uploadTransparent = async (url: string) => {
     // TODO: Make this unnecessary
     {
       url:
-        (process.env.VERCEL_URL ?? "http://localhost:3000") +
-        "/api/uploadthing",
+        (process.env.VERCEL_URL
+          ? "https://" + process.env.VERCEL_URL
+          : "http://localhost:3000") + "/api/uploadthing",
     }
   );
   return uploadedFiles[0];
