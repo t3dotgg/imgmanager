@@ -1,6 +1,9 @@
 "use client";
 
 import type { ImageFromDb } from "@/db/queries";
+import NextImage from "next/image";
+import { useState } from "react";
+import { Spinner } from "./loading-spinner";
 
 async function downloadAndCopyImageToClipboard(imageUrl: string) {
   console.log("dc image");
@@ -56,18 +59,48 @@ async function downloadAndCopyImageToClipboard(imageUrl: string) {
 }
 
 export const MagicImageRender = ({ image }: { image: ImageFromDb }) => {
+  // For when doing copying
+  const [loading, setLoading] = useState(false);
+  // For when copying is done
+  const [done, setDone] = useState(false);
+
   return (
-    <div className="flex w-56 items-center justify-center">
-      <img
+    <div
+      className="relative flex flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80"
+      onClick={() => {
+        setLoading(true);
+        downloadAndCopyImageToClipboard(
+          image.removedBgUrl ?? image.originalUrl ?? ""
+        ).then(() => {
+          setLoading(false);
+          setDone(true);
+          setTimeout(() => {
+            setDone(false);
+          }, 1000);
+        });
+      }}
+    >
+      <NextImage
         src={image.removedBgUrl ?? image.originalUrl ?? ""}
         alt={image.originalName}
         className="w-full"
-        onClick={() => {
-          downloadAndCopyImageToClipboard(
-            image.removedBgUrl ?? image.originalUrl ?? ""
-          );
-        }}
+        width={350}
+        height={350}
       />
+
+      {loading && (
+        <div className="absolute">
+          <Spinner />
+        </div>
+      )}
+
+      {done && (
+        <div className="absolute">
+          <div className="text-2xl font-bold text-white">Copied!</div>
+        </div>
+      )}
+
+      <div>{image.originalName}</div>
     </div>
   );
 };
