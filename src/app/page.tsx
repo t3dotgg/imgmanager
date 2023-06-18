@@ -1,32 +1,17 @@
-import { SignInButton, SignedIn, SignedOut } from "@clerk/nextjs";
-import ImageUploadButton from "./_components/upload-button";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { getImagesForUser } from "@/db/queries";
-import { MagicImageRender } from "./_components/magic-image";
+import { FullPageDropzone } from "./_components/full-page-dropzone";
 
 async function Images() {
   const data = await getImagesForUser();
-  if (data.length === 0)
-    return <div className="text-2xl">Upload something</div>;
-
-  return (
-    <div className="grid w-full grid-cols-fluid justify-items-center">
-      {data.map((rn) => (
-        <div key={rn.id} className="flex justify-between">
-          <MagicImageRender image={rn} />
-        </div>
-      ))}
-    </div>
-  );
+  return <FullPageDropzone images={data} />;
 }
 
 export default async function Home() {
   return (
-    <div className="flex flex-col items-center">
-      <SignedOut>
-        <SignInButton />
-      </SignedOut>
+    <div className="flex items-center">
+      <SignedOut>Sign in above first</SignedOut>
       <SignedIn>
-        <ImageUploadButton />
         <Images />
       </SignedIn>
     </div>
