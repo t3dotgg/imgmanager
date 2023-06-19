@@ -1,14 +1,59 @@
 "use client";
 
 import type { ImageFromDb } from "@/db/queries";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { MagicImageRender } from "./magic-image";
 import { usePageDropzone } from "./use-page-dropzone";
 
-import clsx from "clsx";
+import { generateReactHelpers } from "@uploadthing/react/hooks";
 
-const UploadingImage = (props: { file: File }) => {
-  return <img src={URL.createObjectURL(props.file)} />;
+import clsx from "clsx";
+import { OurFileRouter } from "../api/uploadthing/core";
+import { useRouter } from "next/navigation";
+import NextImage from "next/image";
+
+const { uploadFiles } = generateReactHelpers<OurFileRouter>();
+
+const UploadingImage = (props: {
+  file: File;
+  upload: boolean;
+  removeImage: () => void;
+}) => {
+  const { refresh } = useRouter();
+  const [, startTransition] = useTransition();
+
+  useEffect(() => {
+    if (props.upload) {
+      uploadFiles([props.file], "imageUploader").then(() => {
+        startTransition(() => {
+          props.removeImage();
+          refresh();
+        });
+      });
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.file.name, props.upload]);
+
+  return (
+    <div className="relative flex w-full flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80">
+      <div className="relative h-48 w-full">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          alt={props.file.name + " is uploading..."}
+          src={URL.createObjectURL(props.file)}
+          className={clsx([
+            "absolute h-full w-full object-contain",
+            {
+              "animate-pulse": props.upload,
+              "opacity-50": !props.upload,
+            },
+          ])}
+        />
+      </div>
+      <div>{props.file.name}</div>
+    </div>
+  );
 };
 
 export const FullPageDropzone = (props: { images: ImageFromDb[] }) => {
@@ -19,7 +64,9 @@ export const FullPageDropzone = (props: { images: ImageFromDb[] }) => {
     console.log("Files", files);
   }, [files]);
 
-  const { isDragging } = usePageDropzone(setFiles);
+  const { isDragging } = usePageDropzone((f) =>
+    setFiles((oF) => [...oF, ...f])
+  );
 
   if (props.images.length === 0)
     return <div className="text-2xl">Upload something</div>;
@@ -32,12 +79,19 @@ export const FullPageDropzone = (props: { images: ImageFromDb[] }) => {
     >
       <div className="grid h-full grid-cols-fluid justify-items-center overflow-y-scroll">
         {files.map((file, index) => (
-          <UploadingImage file={file} key={index} />
+          <UploadingImage
+            key={file.name + "-uploading"}
+            file={file}
+            upload={files.length - index < 4}
+            removeImage={() =>
+              setFiles((fileList) =>
+                fileList.filter((currentFile) => currentFile.name !== file.name)
+              )
+            }
+          />
         ))}
         {props.images.map((rn) => (
-          <div key={rn.id} className="flex justify-between">
-            <MagicImageRender image={rn} />
-          </div>
+          <MagicImageRender image={rn} key={rn.id} />
         ))}
       </div>
 
