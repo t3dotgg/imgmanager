@@ -7,6 +7,8 @@ async function Images() {
   return <FullPageDropzone images={data} />;
 }
 
+export const runtime = "edge";
+
 export default async function Home() {
   return (
     <div className="flex items-center">
