@@ -28,21 +28,21 @@ export const ourFileRouter = {
         originalUrl: file.url,
       });
 
-      // const transparent = await uploadTransparent(file.url);
+      const transparent = await uploadTransparent(file.url);
 
-      // if (!transparent.fileUrl) {
-      //   console.error("UNABLE TO UPLOAD TRANSPARENT IMAGE FILE", file);
-      //   return;
-      // }
+      if (!transparent.fileUrl) {
+        console.error("UNABLE TO UPLOAD TRANSPARENT IMAGE FILE", file);
+        return;
+      }
 
-      // await db
-      //   .update(uploadedImage)
-      //   .set({
-      //     removedBgUrl: transparent.fileUrl,
-      //   })
-      //   .where(eq(uploadedImage.fileKey, file.key));
+      await db
+        .update(uploadedImage)
+        .set({
+          removedBgUrl: transparent.fileUrl,
+        })
+        .where(eq(uploadedImage.fileKey, file.key));
 
-      // console.log("bg transparent written");
+      console.log("bg transparent written");
     }),
 
   transparentUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 20 } })
