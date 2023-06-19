@@ -1,7 +1,7 @@
 "use client";
 
 import type { ImageFromDb } from "@/db/queries";
-import { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useState, useTransition } from "react";
 import { MagicImageRender } from "./magic-image";
 import { usePageDropzone } from "./use-page-dropzone";
 
@@ -56,7 +56,15 @@ const UploadingImage = (props: {
   );
 };
 
-export const FullPageDropzone = (props: { images: ImageFromDb[] }) => {
+const ImageGrid: React.FC<{ children: React.ReactNode }> = (props) => (
+  <div className="grid h-full grid-cols-fluid justify-items-center">
+    {props.children}
+  </div>
+);
+
+export const FullPageDropzone = (props: {
+  images: Record<string, ImageFromDb[]>;
+}) => {
   const [files, setFiles] = useState<File[]>([]);
 
   useEffect(() => {
@@ -68,7 +76,7 @@ export const FullPageDropzone = (props: { images: ImageFromDb[] }) => {
     setFiles((oF) => [...oF, ...f])
   );
 
-  if (props.images.length === 0)
+  if (Object.keys(props.images).length === 0)
     return <div className="text-2xl">Upload something</div>;
 
   return (
@@ -77,21 +85,32 @@ export const FullPageDropzone = (props: { images: ImageFromDb[] }) => {
         "bg-slate-700/20": isDragging,
       })}
     >
-      <div className="grid h-full grid-cols-fluid justify-items-center overflow-y-scroll">
-        {files.map((file, index) => (
-          <UploadingImage
-            key={file.name + "-uploading"}
-            file={file}
-            upload={files.length - index < 4}
-            removeImage={() =>
-              setFiles((fileList) =>
-                fileList.filter((currentFile) => currentFile.name !== file.name)
-              )
-            }
-          />
-        ))}
-        {props.images.map((rn) => (
-          <MagicImageRender image={rn} key={rn.id} />
+      <div className="flex h-full w-full flex-col overflow-y-scroll">
+        <ImageGrid>
+          {files.map((file, index) => (
+            <UploadingImage
+              key={file.name + "-uploading"}
+              file={file}
+              upload={files.length - index < 4}
+              removeImage={() =>
+                setFiles((fileList) =>
+                  fileList.filter(
+                    (currentFile) => currentFile.name !== file.name
+                  )
+                )
+              }
+            />
+          ))}
+        </ImageGrid>
+        {Object.keys(props.images).map((imageGroupDate) => (
+          <React.Fragment key={imageGroupDate}>
+            <h3 className="p-4 text-2xl font-bold">{imageGroupDate}</h3>
+            <ImageGrid>
+              {props.images[imageGroupDate].map((rn) => (
+                <MagicImageRender image={rn} key={rn.id} />
+              ))}
+            </ImageGrid>
+          </React.Fragment>
         ))}
       </div>
 

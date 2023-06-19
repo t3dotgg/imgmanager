@@ -1,9 +1,9 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { getImagesForUser } from "@/db/queries";
+import { getGroupedImagesForUser, getImagesForUser } from "@/db/queries";
 import { FullPageDropzone } from "./_components/full-page-dropzone";
 
 async function Images() {
-  const data = await getImagesForUser();
+  const data = await getGroupedImagesForUser();
   return <FullPageDropzone images={data} />;
 }
 
