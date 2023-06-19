@@ -17,7 +17,7 @@ export const uploadedImage = mysqlTable(
     id: serial("id").primaryKey(),
 
     // Always useful info
-    createdAt: timestamp("createdAt").defaultNow(),
+    createdAt: timestamp("createdAt").notNull().defaultNow(),
     completedAt: timestamp("completedAt"),
     userId: varchar("userId", { length: 256 }).notNull(),
 
