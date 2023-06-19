@@ -66,7 +66,7 @@ export const MagicImageRender = ({ image }: { image: ImageFromDb }) => {
 
   return (
     <div
-      className="relative flex flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80"
+      className="relative flex w-full flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80"
       onClick={() => {
         setLoading(true);
         downloadAndCopyImageToClipboard(
@@ -80,13 +80,15 @@ export const MagicImageRender = ({ image }: { image: ImageFromDb }) => {
         });
       }}
     >
-      <NextImage
-        src={image.removedBgUrl ?? image.originalUrl ?? ""}
-        alt={image.originalName}
-        className="w-full"
-        width={350}
-        height={350}
-      />
+      <div className="relative h-48 w-full">
+        <NextImage
+          src={image.removedBgUrl ?? image.originalUrl ?? ""}
+          alt={image.originalName}
+          className="object-contain"
+          fill={true}
+          sizes="192px"
+        />
+      </div>
 
       {loading && (
         <div className="absolute">

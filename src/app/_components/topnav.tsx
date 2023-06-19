@@ -3,8 +3,8 @@ import React from "react";
 
 const TopNavLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex min-h-screen flex-col">
-      <header className="border-b">
+    <div className="relative grid h-screen max-h-screen grid-cols-1 grid-rows-[auto,_auto] flex-col">
+      <header className="z-10 flex-shrink border-b bg-zinc-950">
         <nav className="container mx-auto flex justify-between px-4 py-4">
           <span className="text-2xl font-bold">imgthing</span>
           <SignedOut>
@@ -15,7 +15,7 @@ const TopNavLayout = ({ children }: { children: React.ReactNode }) => {
           </SignedIn>
         </nav>
       </header>
-      <main className="container mx-auto flex-grow">{children}</main>
+      <main className="min-h-0 flex-grow overflow-y-scroll">{children}</main>
     </div>
   );
 };
