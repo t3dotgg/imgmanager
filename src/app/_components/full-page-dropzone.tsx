@@ -56,6 +56,21 @@ const UploadingImage = (props: {
   );
 };
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+import isToday from "dayjs/plugin/isToday";
+import isYesterday from "dayjs/plugin/isYesterday";
+dayjs.extend(relativeTime);
+dayjs.extend(isToday);
+dayjs.extend(isYesterday);
+
+const genTimestamp = (timestamp: string) => {
+  const time = dayjs(timestamp);
+  if (time.isToday()) return "Today";
+  if (time.isYesterday()) return "Yesterday";
+  return time.toDate().toLocaleDateString();
+};
+
 const ImageGrid: React.FC<{ children: React.ReactNode }> = (props) => (
   <div className="grid h-full grid-cols-fluid justify-items-center">
     {props.children}
@@ -86,6 +101,9 @@ export const FullPageDropzone = (props: {
       })}
     >
       <div className="flex h-full w-full flex-col overflow-y-scroll">
+        {files.length > 0 && (
+          <h3 className="p-4 text-2xl font-bold">Uploading...</h3>
+        )}
         <ImageGrid>
           {files.map((file, index) => (
             <UploadingImage
@@ -104,7 +122,13 @@ export const FullPageDropzone = (props: {
         </ImageGrid>
         {Object.keys(props.images).map((imageGroupDate) => (
           <React.Fragment key={imageGroupDate}>
-            <h3 className="p-4 text-2xl font-bold">{imageGroupDate}</h3>
+            <div className="flex w-full items-center py-4">
+              <div className="h-0 w-12 border-2"></div>
+              <h3 className="px-4 text-2xl font-bold">
+                {genTimestamp(imageGroupDate)}
+              </h3>
+              <div className="h-0 flex-grow border-2"></div>
+            </div>
             <ImageGrid>
               {props.images[imageGroupDate].map((rn) => (
                 <MagicImageRender image={rn} key={rn.id} />
