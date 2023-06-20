@@ -1,7 +1,7 @@
 "use client";
 
 import type { ImageFromDb } from "@/db/queries";
-import React, { useEffect, useState, useTransition } from "react";
+import React, { useEffect, useMemo, useState, useTransition } from "react";
 import { MagicImageRender } from "./magic-image";
 import { usePageDropzone } from "./use-page-dropzone";
 
@@ -60,6 +60,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import isToday from "dayjs/plugin/isToday";
 import isYesterday from "dayjs/plugin/isYesterday";
+import { groupImagesByDate } from "@/utils/group-images";
 dayjs.extend(relativeTime);
 dayjs.extend(isToday);
 dayjs.extend(isYesterday);
@@ -77,10 +78,12 @@ const ImageGrid: React.FC<{ children: React.ReactNode }> = (props) => (
   </div>
 );
 
-export const FullPageDropzone = (props: {
-  images: Record<string, ImageFromDb[]>;
-}) => {
+export default function FullPageDropzone(props: { images: ImageFromDb[] }) {
   const [files, setFiles] = useState<File[]>([]);
+
+  const groupedImages = useMemo(() => {
+    return groupImagesByDate(props.images);
+  }, [props.images]);
 
   useEffect(() => {
     if (files.length === 0) return;
@@ -91,7 +94,7 @@ export const FullPageDropzone = (props: {
     setFiles((oF) => [...oF, ...f])
   );
 
-  if (Object.keys(props.images).length === 0)
+  if (Object.keys(groupedImages).length === 0)
     return <div className="text-2xl">Upload something</div>;
 
   return (
@@ -120,7 +123,7 @@ export const FullPageDropzone = (props: {
             />
           ))}
         </ImageGrid>
-        {Object.keys(props.images).map((imageGroupDate) => (
+        {Object.keys(groupedImages).map((imageGroupDate) => (
           <React.Fragment key={imageGroupDate}>
             <div className="flex w-full items-center py-4">
               <div className="h-0 w-12 border-2"></div>
@@ -130,7 +133,7 @@ export const FullPageDropzone = (props: {
               <div className="h-0 flex-grow border-2"></div>
             </div>
             <ImageGrid>
-              {props.images[imageGroupDate].map((rn) => (
+              {groupedImages[imageGroupDate].map((rn) => (
                 <MagicImageRender image={rn} key={rn.id} />
               ))}
             </ImageGrid>
@@ -147,4 +150,4 @@ export const FullPageDropzone = (props: {
       )}
     </div>
   );
-};
+}
