@@ -2,6 +2,8 @@ import "./polyfill";
 import { uploadFileOnServer } from "./upload-on-server";
 
 export const uploadTransparent = async (url: string) => {
+  if (!process.env.PROCESSOR_KEY) throw new Error("no key?");
+
   const form = new FormData();
   form.append("image_url", url);
   form.append("sync", "1");
@@ -11,7 +13,7 @@ export const uploadTransparent = async (url: string) => {
     {
       method: "POST",
       headers: {
-        "X-API-KEY": process.env.PROCESSOR_KEY!,
+        "X-API-KEY": process.env.PROCESSOR_KEY,
       },
       body: form,
     }
