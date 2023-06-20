@@ -1,10 +1,17 @@
 import { SignedIn, SignedOut } from "@clerk/nextjs";
-import { getGroupedImagesForUser, getImagesForUser } from "@/db/queries";
-import { FullPageDropzone } from "./_components/full-page-dropzone";
+import { getImagesForUser } from "@/db/queries";
+import dynamic from "next/dynamic";
+
+const LazyFullPageDropzone = dynamic(
+  () => import("./_components/full-page-dropzone"),
+  {
+    ssr: false,
+  }
+);
 
 async function Images() {
-  const data = await getGroupedImagesForUser();
-  return <FullPageDropzone images={data} />;
+  const data = await getImagesForUser();
+  return <LazyFullPageDropzone images={data} />;
 }
 
 export const runtime = "edge";
