@@ -3,7 +3,7 @@ import React from "react";
 
 const TopNavLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="relative grid h-screen max-h-screen grid-cols-1 grid-rows-[auto,_auto] flex-col">
+    <div className="relative grid h-screen max-h-screen grid-cols-1 grid-rows-[auto,_1fr] flex-col">
       <header className="z-10 flex-shrink shadow-xl">
         <nav className="container mx-auto flex justify-between px-4 py-4">
           <span className="text-2xl font-bold">imgthing</span>
