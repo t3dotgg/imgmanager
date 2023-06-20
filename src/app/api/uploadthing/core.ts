@@ -45,7 +45,7 @@ export const ourFileRouter = {
       console.log("bg transparent written");
     }),
 
-  transparentUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 20 } })
+  transparentUploader: f({ image: { maxFileSize: "16MB", maxFileCount: 20 } })
     .middleware(async (req) => {
       return { userId: "serverside" };
     })

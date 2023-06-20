@@ -6,7 +6,7 @@ import { useState } from "react";
 import { Spinner } from "./loading-spinner";
 
 async function downloadAndCopyImageToClipboard(imageUrl: string) {
-  console.log("dc image");
+  console.log("dc image", imageUrl);
   if (!navigator.clipboard) {
     console.error("Clipboard API not supported in this browser.");
     return;
@@ -68,6 +68,7 @@ export const MagicImageRender = ({ image }: { image: ImageFromDb }) => {
     <div
       className="relative flex w-full flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80"
       onClick={() => {
+        console.log("copying image", image);
         setLoading(true);
         downloadAndCopyImageToClipboard(
           image.removedBgUrl ?? image.originalUrl ?? ""
