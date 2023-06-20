@@ -1,7 +1,3 @@
-import { uploadFileOnServer } from "../api/uploadthing/upload-on-server";
-
-export const runtime = "nodejs";
-
 async function doSomeWorkonServer() {
   "use server";
 
