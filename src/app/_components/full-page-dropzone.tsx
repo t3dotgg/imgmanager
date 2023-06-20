@@ -100,7 +100,7 @@ export const FullPageDropzone = (props: {
         "bg-slate-700/20": isDragging,
       })}
     >
-      <div className="flex h-full w-full flex-col overflow-y-scroll">
+      <div className="flex h-full w-full animate-fade-in-down flex-col overflow-y-scroll">
         {files.length > 0 && (
           <h3 className="p-4 text-2xl font-bold">Uploading...</h3>
         )}
