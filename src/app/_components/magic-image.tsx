@@ -13,26 +13,11 @@ async function downloadAndCopyImageToClipboard(imageUrl: string) {
   }
 
   try {
-    const response = await fetch(imageUrl);
-
-    if (!response.ok) {
-      throw new Error(`Error fetching image: ${response.statusText}`);
-    }
-
-    const blob = await response.blob();
-    const data = await (async () => {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = () => reject(reader.error);
-        reader.readAsDataURL(blob);
-      });
-    })();
-
     const img: HTMLImageElement = await new Promise((resolve) => {
       const img = new Image();
+      img.crossOrigin = "anonymous";
       img.onload = () => resolve(img);
-      img.src = data as string;
+      img.src = imageUrl;
     });
 
     const canvas = document.createElement("canvas");
