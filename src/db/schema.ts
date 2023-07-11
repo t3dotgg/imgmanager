@@ -24,6 +24,7 @@ export const uploadedImage = mysqlTable(
     // "on upload start" info
     originalName: varchar("original_name", { length: 256 }).notNull(),
     fileKey: varchar("file_key", { length: 256 }).notNull(),
+    md5Hash: varchar("md5_hash", { length: 256 }),
 
     // Added afterwards
     originalUrl: varchar("ogUrl", { length: 800 }),

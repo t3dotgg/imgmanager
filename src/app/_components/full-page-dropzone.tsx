@@ -12,6 +12,23 @@ import { OurFileRouter } from "../api/uploadthing/core";
 import { useRouter } from "next/navigation";
 import NextImage from "next/image";
 
+import Spark from "spark-md5";
+
+const generateMD5ForFile = (file: File) => {
+  return new Promise<string>((resolve) => {
+    const reader = new FileReader();
+    const spark = new Spark();
+
+    reader.onload = (e) => {
+      if (e.target === null) return;
+      spark.appendBinary(e.target.result as string);
+      resolve(spark.end());
+    };
+
+    reader.readAsBinaryString(file);
+  });
+};
+
 const { uploadFiles } = generateReactHelpers<OurFileRouter>();
 
 const UploadingImage = (props: {
@@ -90,9 +107,15 @@ export default function FullPageDropzone(props: { images: ImageFromDb[] }) {
     console.log("Files", files);
   }, [files]);
 
-  const { isDragging } = usePageDropzone((f) =>
-    setFiles((oF) => [...oF, ...f])
-  );
+  const { isDragging } = usePageDropzone((f) => {
+    console.log("Files", f);
+
+    generateMD5ForFile(f[0]).then((md5) => {
+      console.log("md5 for f", f[0], md5);
+    });
+
+    // return setFiles((oF) => [...oF, ...f]);
+  });
 
   if (Object.keys(groupedImages).length === 0)
     return <div className="text-2xl">Upload something</div>;
