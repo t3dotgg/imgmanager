@@ -5,11 +5,11 @@ export const runtime = "nodejs";
 async function doSomeWorkonServer() {
   "use server";
 
-  const resp = await uploadTransparent(
-    "https://uploadthing-prod.s3.us-west-2.amazonaws.com/3d55b9a4-b7e6-4db7-94b0-cf671367b454_P1000028-0054.jpg"
-  );
+  // const resp = await uploadTransparent(
+  //   "https://uploadthing-prod.s3.us-west-2.amazonaws.com/3d55b9a4-b7e6-4db7-94b0-cf671367b454_P1000028-0054.jpg"
+  // );
 
-  console.log("on server", resp);
+  // console.log("on server", resp);
 }
 
 export default function SandboxPage() {
