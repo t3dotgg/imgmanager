@@ -20,9 +20,12 @@ dependencies:
   '@types/react-dom':
     specifier: 18.2.5
     version: 18.2.5
+  '@types/spark-md5':
+    specifier: ^3.0.2
+    version: 3.0.2
   '@uploadthing/react':
-    specifier: ^4.1.3
-    version: 4.1.3(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@4.1.3)(zod@3.21.4)
+    specifier: ^5.1.0
+    version: 5.1.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.1.0)(zod@3.21.4)
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.24)
@@ -56,6 +59,9 @@ dependencies:
   react-dropzone:
     specifier: ^14.2.3
     version: 14.2.3(react@18.2.0)
+  spark-md5:
+    specifier: ^3.0.2
+    version: 3.0.2
   tailwindcss:
     specifier: 3.3.2
     version: 3.3.2
@@ -66,8 +72,8 @@ dependencies:
     specifier: ^5.22.1
     version: 5.22.1
   uploadthing:
-    specifier: ^4.1.3
-    version: 4.1.3(zod@3.21.4)
+    specifier: ^5.1.0
+    version: 5.1.0(zod@3.21.4)
 
 devDependencies:
   '@typescript-eslint/eslint-plugin':
@@ -571,6 +577,10 @@ packages:
       '@types/node': 20.2.5
     dev: false
 
+  /@types/spark-md5@3.0.2:
+    resolution: {integrity: sha512-82E/lVRaqelV9qmRzzJ1PKTpyrpnT7mwdneKNJB9hUtypZDMggloDfFUCIqRRx3lYRxteCwXSq9c+W71Vf0QnQ==}
+    dev: false
+
   /@typescript-eslint/eslint-plugin@5.59.9(@typescript-eslint/parser@5.59.9)(eslint@8.41.0)(typescript@5.1.3):
     resolution: {integrity: sha512-4uQIBq1ffXd2YvF7MAvehWKW3zVv/w+mSfRAu+8cKbfj3nwzyqJLNcZJpQ/WZ1HLbJDiowwmQ6NO+63nCA+fqA==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
@@ -700,24 +710,24 @@ packages:
     resolution: {integrity: sha512-nRcdyM622+GYT9SdaJIVLknqoc8i7krItinfuBPtvmPc+UNGDJ+pMkr4AatYp88cEc4iYtPlN8flJvZ3dNtgrg==}
     dev: false
 
-  /@uploadthing/react@4.1.3(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@4.1.3)(zod@3.21.4):
-    resolution: {integrity: sha512-PG463gGyFnvaBhG5tf7rLDUQb9WDbHPzcV/1EGvrkli4LoMHtBXmTeD9WujwopJ4LjyVuXLh4hgYm7ZJlMlThQ==}
+  /@uploadthing/react@5.1.0(react-dropzone@14.2.3)(react@18.2.0)(uploadthing@5.1.0)(zod@3.21.4):
+    resolution: {integrity: sha512-gBcw7A6I3/1APqSB2tRk81JNRYdopurt5cHrTdlrLQakH2XnCTs+1Ptl+Tx6MP/zVPajJHdW5B3JB8iQc4SHoQ==}
     peerDependencies:
       react: ^17.0.2 || ^18.0.0
       react-dropzone: ^14.2.3
-      uploadthing: ^4.0.0
+      uploadthing: ^5.0.0
     dependencies:
-      '@uploadthing/shared': 5.0.0(@uploadthing/mime-types@0.2.0)(zod@3.21.4)
+      '@uploadthing/shared': 5.0.1(@uploadthing/mime-types@0.2.0)(zod@3.21.4)
       react: 18.2.0
       react-dropzone: 14.2.3(react@18.2.0)
-      uploadthing: 4.1.3(zod@3.21.4)
+      uploadthing: 5.1.0(zod@3.21.4)
     transitivePeerDependencies:
       - '@uploadthing/mime-types'
       - zod
     dev: false
 
-  /@uploadthing/shared@5.0.0(@uploadthing/mime-types@0.2.0)(zod@3.21.4):
-    resolution: {integrity: sha512-Owr/RbSZgThcjZWWy6xTcmRH6jNcCfTGtrH3jAftA1nlGW1g4FzrdTZIHB2fdjZ5qJJ2KoyY3cPY1wEdE4FjaQ==}
+  /@uploadthing/shared@5.0.1(@uploadthing/mime-types@0.2.0)(zod@3.21.4):
+    resolution: {integrity: sha512-SMIM9Dyxu/LuKZCM0w/yCXL/wrZedUHKiEK022y5LXhbG7uApVFBPChC2+CCY7ZRU3O9sCCNsDj6OjdygIOEQw==}
     peerDependencies:
       '@uploadthing/mime-types': ^0.2.0
       zod: ^3.21.4
@@ -3417,6 +3427,10 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: false
 
+  /spark-md5@3.0.2:
+    resolution: {integrity: sha512-wcFzz9cDfbuqe0FZzfi2or1sgyIrsDwmPwfZC4hiNidPdPINjeUwNfv5kldczoEAcjl9Y1L3SM7Uz2PUEQzxQw==}
+    dev: false
+
   /stop-iteration-iterator@1.0.0:
     resolution: {integrity: sha512-iCGQj+0l0HOdZ2AEeBADlsRC+vsnDsZsbdSiH1yNSjcfKM7fdpCMfqAL/dwF5BLiw/XhRft/Wax6zQbhq2BcjQ==}
     engines: {node: '>= 0.4'}
@@ -3738,11 +3752,11 @@ packages:
       picocolors: 1.0.0
     dev: false
 
-  /uploadthing@4.1.3(zod@3.21.4):
-    resolution: {integrity: sha512-4cvlRhtld+GwrEE3AsjBLJaqYjZOAuyzwD/69wHcYlT175Ukgw8Yn5xPRAChPIEUmCM7JLBJu6OOneSGP/mRxg==}
+  /uploadthing@5.1.0(zod@3.21.4):
+    resolution: {integrity: sha512-adWd3D0/r25EspS1s+p2RLvSpDPLOQC+AM+mH1JomsTdEDiderjxMeo6juZUWnq96O/Dsumh97SeFJXDLWI+Qw==}
     dependencies:
       '@uploadthing/mime-types': 0.2.0
-      '@uploadthing/shared': 5.0.0(@uploadthing/mime-types@0.2.0)(zod@3.21.4)
+      '@uploadthing/shared': 5.0.1(@uploadthing/mime-types@0.2.0)(zod@3.21.4)
     transitivePeerDependencies:
       - zod
     dev: false
