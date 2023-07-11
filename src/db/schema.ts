@@ -21,6 +21,8 @@ export const uploadedImage = mysqlTable(
     completedAt: timestamp("completedAt"),
     userId: varchar("userId", { length: 256 }).notNull(),
 
+    orgId: varchar("orgId", { length: 256 }),
+
     // "on upload start" info
     originalName: varchar("original_name", { length: 256 }).notNull(),
     fileKey: varchar("file_key", { length: 256 }).notNull(),

@@ -96,8 +96,63 @@ export default function FullPageDropzone(props: { images: ImageFromDb[] }) {
     setFiles((oF) => [...oF, ...f])
   );
 
-  if (Object.keys(groupedImages).length === 0)
-    return <div className="text-2xl">Upload something</div>;
+  const genContent = () => {
+    if (Object.keys(groupedImages).length === 0 && files.length === 0) {
+      return (
+        <div className="w-full py-8 text-center text-2xl">Upload something</div>
+      );
+    }
+
+    return (
+      <>
+        <div className="flex h-full w-full animate-fade-in-down flex-col overflow-y-scroll">
+          {files.length > 0 && (
+            <h3 className="p-4 text-2xl font-bold">Uploading...</h3>
+          )}
+          <ImageGrid>
+            {files.map((file, index) => (
+              <UploadingImage
+                key={file.name + "-uploading"}
+                file={file}
+                upload={files.length - index < 4}
+                removeImage={() =>
+                  setFiles((fileList) =>
+                    fileList.filter(
+                      (currentFile) => currentFile.name !== file.name
+                    )
+                  )
+                }
+              />
+            ))}
+          </ImageGrid>
+          {Object.keys(groupedImages).map((imageGroupDate) => (
+            <React.Fragment key={imageGroupDate}>
+              <div className="flex w-full items-center py-4">
+                <div className="h-0 w-12 border-2"></div>
+                <h3 className="px-4 text-2xl font-bold">
+                  {genTimestamp(imageGroupDate)}
+                </h3>
+                <div className="h-0 flex-grow border-2"></div>
+              </div>
+              <ImageGrid>
+                {groupedImages[imageGroupDate].map((rn) => (
+                  <MagicImageRender image={rn} key={rn.id} />
+                ))}
+              </ImageGrid>
+            </React.Fragment>
+          ))}
+        </div>
+
+        {isDragging && (
+          <div className="absolute right-0 top-0 z-20 flex h-screen w-full bg-slate-600/50 p-4">
+            <div className="sticky top-0 flex h-full w-full items-center justify-center rounded border-2 border-dashed border-white bg-slate-600 text-2xl">
+              UPLOAD FILES
+            </div>
+          </div>
+        )}
+      </>
+    );
+  };
 
   return (
     <div
@@ -105,51 +160,7 @@ export default function FullPageDropzone(props: { images: ImageFromDb[] }) {
         "bg-slate-700/20": isDragging,
       })}
     >
-      <div className="flex h-full w-full animate-fade-in-down flex-col overflow-y-scroll">
-        {files.length > 0 && (
-          <h3 className="p-4 text-2xl font-bold">Uploading...</h3>
-        )}
-        <ImageGrid>
-          {files.map((file, index) => (
-            <UploadingImage
-              key={file.name + "-uploading"}
-              file={file}
-              upload={files.length - index < 4}
-              removeImage={() =>
-                setFiles((fileList) =>
-                  fileList.filter(
-                    (currentFile) => currentFile.name !== file.name
-                  )
-                )
-              }
-            />
-          ))}
-        </ImageGrid>
-        {Object.keys(groupedImages).map((imageGroupDate) => (
-          <React.Fragment key={imageGroupDate}>
-            <div className="flex w-full items-center py-4">
-              <div className="h-0 w-12 border-2"></div>
-              <h3 className="px-4 text-2xl font-bold">
-                {genTimestamp(imageGroupDate)}
-              </h3>
-              <div className="h-0 flex-grow border-2"></div>
-            </div>
-            <ImageGrid>
-              {groupedImages[imageGroupDate].map((rn) => (
-                <MagicImageRender image={rn} key={rn.id} />
-              ))}
-            </ImageGrid>
-          </React.Fragment>
-        ))}
-      </div>
-
-      {isDragging && (
-        <div className="absolute right-0 top-0 z-20 flex h-screen w-full bg-slate-600/50 p-4">
-          <div className="sticky top-0 flex h-full w-full items-center justify-center rounded border-2 border-dashed border-white bg-slate-600 text-2xl">
-            UPLOAD FILES
-          </div>
-        </div>
-      )}
+      {genContent()}
     </div>
   );
 }

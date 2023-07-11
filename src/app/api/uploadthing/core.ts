@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { uploadedImage } from "@/db/schema";
-import { currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { eq } from "drizzle-orm";
 import { uploadTransparent } from "./make-transparent-file";
@@ -11,11 +11,14 @@ export const ourFileRouter = {
   imageUploader: f({ image: { maxFileSize: "4MB", maxFileCount: 20 } })
     .middleware(async (req) => {
       const user = await currentUser();
+      const sesh = await auth();
+
+      const orgId = sesh.orgId;
 
       if (!user || !user.id || !user.privateMetadata.enabled)
         throw new Error("Unauthorized");
 
-      return { userId: user.id };
+      return { userId: user.id, orgId: orgId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       console.log("Upload complete for userId:", metadata.userId);
@@ -23,6 +26,7 @@ export const ourFileRouter = {
       console.log("file url", file.url);
       const createdInDb = await db.insert(uploadedImage).values({
         userId: metadata.userId,
+        orgId: metadata.orgId,
         fileKey: file.key,
         originalName: file.name,
         originalUrl: file.url,

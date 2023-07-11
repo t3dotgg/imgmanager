@@ -1,4 +1,11 @@
-import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import {
+  OrganizationSwitcher,
+  SignInButton,
+  SignedIn,
+  SignedOut,
+  UserButton,
+} from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 import React from "react";
 
 const TopNavLayout = ({ children }: { children: React.ReactNode }) => {
@@ -11,6 +18,8 @@ const TopNavLayout = ({ children }: { children: React.ReactNode }) => {
             <SignInButton />
           </SignedOut>
           <SignedIn>
+            {/* TODO: Hide org switcher if not in an org */}
+            <OrganizationSwitcher appearance={{ baseTheme: dark }} />
             <UserButton />
           </SignedIn>
         </nav>
