@@ -19,8 +19,7 @@ export const uploadFileOnServer = async (url: string) => {
   });
 
   const uploadedFiles = await DANGEROUS__uploadFiles(
-    [mockFile],
-    "transparentUploader",
+    { files: [mockFile], endpoint: "transparentUploader" },
 
     // TODO: Make this unnecessary
     {

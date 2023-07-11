@@ -30,8 +30,7 @@ export const uploadTransparent = async (inputUrl: string) => {
   });
 
   const uploadedFiles = await DANGEROUS__uploadFiles(
-    [mockFile],
-    "transparentUploader",
+    { files: [mockFile], endpoint: "transparentUploader" },
 
     // TODO: Make this unnecessary
     {

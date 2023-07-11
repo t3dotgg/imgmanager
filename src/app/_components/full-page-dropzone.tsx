@@ -24,12 +24,14 @@ const UploadingImage = (props: {
 
   useEffect(() => {
     if (props.upload) {
-      uploadFiles([props.file], "imageUploader").then(() => {
-        startTransition(() => {
-          props.removeImage();
-          refresh();
-        });
-      });
+      uploadFiles({ files: [props.file], endpoint: "imageUploader" }).then(
+        () => {
+          startTransition(() => {
+            props.removeImage();
+            refresh();
+          });
+        }
+      );
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
