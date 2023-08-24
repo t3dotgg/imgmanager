@@ -34,7 +34,7 @@ export const ourFileRouter = {
 
       const transparent = await uploadTransparent(file.url);
 
-      if (!transparent.fileUrl) {
+      if (!transparent.data?.url) {
         console.error("UNABLE TO UPLOAD TRANSPARENT IMAGE FILE", file);
         return;
       }
@@ -42,7 +42,7 @@ export const ourFileRouter = {
       await db
         .update(uploadedImage)
         .set({
-          removedBgUrl: transparent.fileUrl,
+          removedBgUrl: transparent.data?.url,
         })
         .where(eq(uploadedImage.fileKey, file.key));
 

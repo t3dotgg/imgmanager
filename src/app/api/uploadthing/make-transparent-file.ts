@@ -3,6 +3,7 @@ import { blob } from "node:stream/consumers";
 
 import { Readable } from "stream";
 import { DANGEROUS__uploadFiles } from "uploadthing/client";
+import { utapi } from "uploadthing/server";
 
 export const uploadTransparent = async (inputUrl: string) => {
   if (!process.env.REMOVEBG_KEY) throw new Error("No removebg key");
@@ -24,21 +25,14 @@ export const uploadTransparent = async (inputUrl: string) => {
 
   const r = Readable.fromWeb(body as any);
 
+  console.log("got file from remove bg");
+
   const fileBlob = await blob(r);
   const mockFile = new File([fileBlob as any], "transparent.png", {
     type: "image/png",
   });
 
-  const uploadedFiles = await DANGEROUS__uploadFiles(
-    { files: [mockFile], endpoint: "transparentUploader" },
+  const uploadedFile = await utapi.uploadFiles(mockFile);
 
-    // TODO: Make this unnecessary
-    {
-      url:
-        (process.env.VERCEL_URL
-          ? "https://" + process.env.VERCEL_URL
-          : "http://localhost:3000") + "/api/uploadthing",
-    }
-  );
-  return uploadedFiles[0];
+  return uploadedFile;
 };

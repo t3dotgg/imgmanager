@@ -5,6 +5,7 @@ import { Readable } from "stream";
 import { DANGEROUS__uploadFiles } from "uploadthing/client";
 
 export const uploadFileOnServer = async (url: string) => {
+  console.log("uploading file from url on server");
   const { body } = await fetch(url, {
     next: {
       revalidate: 0,
