@@ -19,7 +19,6 @@ export const runtime = "edge";
 export default async function Home() {
   return (
     <div className="flex items-center">
-      <SignedOut>Sign in above first</SignedOut>
       <SignedIn>
         <Images />
       </SignedIn>
