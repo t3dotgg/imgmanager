@@ -31,7 +31,7 @@ export const ourFileRouter = {
         originalUrl: file.url,
       });
 
-      inngest.send({
+      await inngest.send({
         name: "gen/transparent",
         data: { imageUrl: file.url, fileKey: file.key },
       });
