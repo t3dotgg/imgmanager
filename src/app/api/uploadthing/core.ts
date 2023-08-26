@@ -2,8 +2,6 @@ import { db } from "@/db";
 import { uploadedImage } from "@/db/schema";
 import { auth, currentUser } from "@clerk/nextjs";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
-import { eq } from "drizzle-orm";
-import { uploadTransparent } from "./make-transparent-file";
 import { inngest } from "@/pages/api/inngest";
 
 const f = createUploadthing();
