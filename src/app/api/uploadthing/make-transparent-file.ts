@@ -2,7 +2,6 @@ import "./polyfill";
 import { blob } from "node:stream/consumers";
 
 import { Readable } from "stream";
-import { DANGEROUS__uploadFiles } from "uploadthing/client";
 import { utapi } from "uploadthing/server";
 
 export const uploadTransparent = async (inputUrl: string) => {

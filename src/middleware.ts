@@ -6,6 +6,7 @@ const publicRoutes = [
   "/sign-in",
   "/sign-up",
   "/api(.*)",
+  "/x(.*)",
   "/info(.*)",
   "/proxy(.*)",
 ];
