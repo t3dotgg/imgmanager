@@ -4,6 +4,8 @@ import type { ImageFromDb } from "@/db/queries";
 import NextImage from "next/image";
 import { useState } from "react";
 import { Spinner } from "./loading-spinner";
+import { useIdToggle } from "./selection/store";
+import clsx from "clsx";
 
 async function downloadAndCopyImageToClipboard(imageUrl: string) {
   console.log("dc image", imageUrl);
@@ -49,21 +51,30 @@ export const MagicImageRender = ({ image }: { image: ImageFromDb }) => {
   // For when copying is done
   const [done, setDone] = useState(false);
 
+  const { toggle, isSelected } = useIdToggle(image.fileKey);
+
   return (
     <div
-      className="relative flex w-full flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80"
+      className={clsx(
+        "relative flex w-full flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80",
+        {
+          "border-8 border-red-500 bg-gray-800": isSelected,
+          "p-2": !isSelected,
+        }
+      )}
       onClick={() => {
         console.log("copying image", image);
-        setLoading(true);
-        downloadAndCopyImageToClipboard(
-          image.removedBgUrl ?? image.originalUrl ?? ""
-        ).then(() => {
-          setLoading(false);
-          setDone(true);
-          setTimeout(() => {
-            setDone(false);
-          }, 1000);
-        });
+        toggle();
+        // setLoading(true);
+        // downloadAndCopyImageToClipboard(
+        //   image.removedBgUrl ?? image.originalUrl ?? ""
+        // ).then(() => {
+        //   setLoading(false);
+        //   setDone(true);
+        //   setTimeout(() => {
+        //     setDone(false);
+        //   }, 1000);
+        // });
       }}
     >
       <div className="relative h-48 w-full">
