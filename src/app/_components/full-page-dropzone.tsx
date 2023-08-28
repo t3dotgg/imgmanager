@@ -103,8 +103,6 @@ export default function FullPageDropzone(props: { images: ImageFromDb[] }) {
       );
     }
 
-    console.log("first day", groupedImages[Object.keys(groupedImages)[0]]);
-
     return (
       <>
         <div className="flex h-full w-full animate-fade-in-down flex-col overflow-y-scroll">
