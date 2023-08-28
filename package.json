@@ -34,6 +34,7 @@
     "react-dropzone": "^14.2.3",
     "tailwindcss": "3.3.2",
     "typescript": "5.2.2",
+    "undici": "^5.22.1",
     "uploadthing": "^5.3.3"
   },
   "devDependencies": {
