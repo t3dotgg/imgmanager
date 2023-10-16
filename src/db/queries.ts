@@ -23,6 +23,13 @@ export const getImagesForUser = async () => {
   });
 };
 
+export const getImagesForOrg = async (orgId: string) => {
+  return await db.query.uploadedImage.findMany({
+    where: eq(uploadedImage.orgId, orgId),
+    orderBy: desc(uploadedImage.id),
+  });
+};
+
 type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
 
 export type ImageFromDb = Awaited<ReturnType<typeof getImagesForUser>>[0];

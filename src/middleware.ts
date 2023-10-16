@@ -3,6 +3,7 @@ import { authMiddleware } from "@clerk/nextjs/server";
 // Set the paths that don't require the user to be signed in
 const publicRoutes = [
   "/",
+  "/org(.*)",
   "/sign-in",
   "/sign-up",
   "/api(.*)",
