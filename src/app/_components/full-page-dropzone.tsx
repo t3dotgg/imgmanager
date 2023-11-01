@@ -10,8 +10,38 @@ import clsx from "clsx";
 import { OurFileRouter } from "../api/uploadthing/core";
 import { useRouter } from "next/navigation";
 import GroupedImageGrid, { ImageGrid } from "./image-grid";
+import { useSelectStore } from "./selection/store";
+import { deleteImages } from "../actions/deleteImages";
 
 const { uploadFiles } = generateReactHelpers<OurFileRouter>();
+
+const SelectBar = () => {
+  const store = useSelectStore();
+
+  const { refresh } = useRouter();
+
+  if (store.selectedIds.length === 0) return null;
+
+  return (
+    <div className="absolute bottom-0 right-0 z-50 flex w-full items-center justify-center p-4">
+      <div className="flex items-center justify-center gap-4 bg-gray-800 px-4 py-2">
+        <div>{store.selectedIds.length} selected</div>
+        <button
+          onClick={() =>
+            deleteImages(store.selectedIds).then((response) => {
+              console.log("response?", response);
+              store.clearAll();
+              refresh();
+            })
+          }
+          className="rounded-xl bg-red-800 px-2"
+        >
+          Delete
+        </button>
+      </div>
+    </div>
+  );
+};
 
 const UploadingImage = (props: {
   file: File;
@@ -104,6 +134,7 @@ export default function FullPageDropzone(props: { images: ImageFromDb[] }) {
           {files.length > 0 && (
             <h3 className="p-4 text-2xl font-bold">Uploading...</h3>
           )}
+          <SelectBar />
           <ImageGrid>
             {files.map((file, index) => (
               <UploadingImage
