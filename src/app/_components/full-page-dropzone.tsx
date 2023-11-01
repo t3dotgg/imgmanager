@@ -22,19 +22,41 @@ const UploadingImage = (props: {
   const [, startTransition] = useTransition();
 
   useEffect(() => {
+    let cancelled = false;
     if (props.upload) {
-      uploadFiles({ files: [props.file], endpoint: "imageUploader" }).then(
-        () => {
-          startTransition(() => {
-            props.removeImage();
-            refresh();
-          });
+      console.log("PLAN: ", props.file.name);
+
+      // When I upgraded to Next 14, this started to fire twice in close succcession, so I "fixed" it.
+      const timeout = setTimeout(() => {
+        if (cancelled) {
+          console.log("cancelled upload for...", props.file.name);
+          return;
         }
-      );
+        console.log("START: ", props.file.name);
+        uploadFiles({ files: [props.file], endpoint: "imageUploader" }).then(
+          () => {
+            startTransition(() => {
+              props.removeImage();
+              refresh();
+            });
+          }
+        );
+      }, 400);
+
+      return () => {
+        cancelled = true;
+        clearTimeout(timeout);
+      };
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.file.name, props.upload]);
+
+  useEffect(() => {
+    return () => {
+      console.log("unrendering", props.file.name);
+    };
+  }, []);
 
   return (
     <div className="relative flex w-full flex-col items-center justify-center hover:bg-gray-700/40 hover:opacity-80">
