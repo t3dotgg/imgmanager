@@ -2,15 +2,15 @@ import { uploadTransparent } from "@/app/api/uploadthing/make-transparent-file";
 import { db } from "@/db";
 import { uploadedImage } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { Inngest, NonRetriableError } from "inngest";
+import { Inngest, NonRetriableError, slugify } from "inngest";
 import { serve } from "inngest/next";
 
 // Create a client to send and receive events
-export const inngest = new Inngest({ name: "Img Manager" });
+export const inngest = new Inngest({ id: slugify("Img Manager") });
 
 const makeImageTransparent = inngest.createFunction(
   {
-    name: "Generate Transparent",
+    id: "gen/transparent",
     rateLimit: {
       period: "60s",
       limit: 50,
@@ -44,4 +44,4 @@ const makeImageTransparent = inngest.createFunction(
   }
 );
 
-export default serve(inngest, [makeImageTransparent]);
+export default serve({ client: inngest, functions: [makeImageTransparent] });
