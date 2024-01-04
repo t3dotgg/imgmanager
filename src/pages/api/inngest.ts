@@ -11,10 +11,17 @@ export const inngest = new Inngest({ id: slugify("Img Manager") });
 const makeImageTransparent = inngest.createFunction(
   {
     id: "gen/transparent",
-    rateLimit: {
-      period: "60s",
-      limit: 50,
-    },
+
+    // Sadly, inngest's understanding of "ratelimit" varies greatly from
+    // the industry standard, so I can't use this :(
+    // rateLimit: {
+    //   period: "60s",
+    //   limit: 50,
+    // },
+
+    // I don't want concurrency instead but if I don't do this we get fucked
+    concurrency: 3,
+
     onFailure: (e) => {
       console.log("gen/transparent failed", e.error);
     },
