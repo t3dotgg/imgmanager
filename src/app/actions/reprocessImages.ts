@@ -19,7 +19,7 @@ export async function reprocessImages(images: string[]) {
     .from(uploadedImage)
     .where(and(orgOrUser, inArray(uploadedImage.fileKey, images)));
 
-  const results = toProcess.map(async (image) => {
+  const results = toProcess.map((image) => {
     console.log("Sending image", image.id, image.fileKey);
     return inngest.send({
       name: "gen/transparent",
