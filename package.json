@@ -14,7 +14,7 @@
     "db:studio": "dotenv drizzle-kit studio"
   },
   "dependencies": {
-    "@clerk/nextjs": "^4.26.1",
+    "@clerk/nextjs": "^4.29.1",
     "@clerk/themes": "^1.7.9",
     "@planetscale/database": "^1.11.0",
     "@types/node": "20.2.5",
@@ -28,7 +28,7 @@
     "eslint": "8.44.0",
     "eslint-config-next": "14.0.1",
     "inngest": "^3.4.1",
-    "next": "14.0.1",
+    "next": "14.0.4",
     "postcss": "8.4.25",
     "react": "18.2.0",
     "react-dom": "18.2.0",

@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import GroupedImageGrid, { ImageGrid } from "./image-grid";
 import { useSelectStore } from "./selection/store";
 import { deleteImages } from "../actions/deleteImages";
+import { reprocessImages } from "../actions/reprocessImages";
 
 const { uploadFiles } = generateReactHelpers<OurFileRouter>();
 
@@ -37,6 +38,18 @@ const SelectBar = () => {
           className="rounded-xl bg-red-800 px-2"
         >
           Delete
+        </button>
+        <button
+          onClick={() =>
+            reprocessImages(store.selectedIds).then((response) => {
+              console.log("response?", response);
+              store.clearAll();
+              refresh();
+            })
+          }
+          className="rounded-xl bg-green-800 px-2"
+        >
+          Reprocess
         </button>
       </div>
     </div>

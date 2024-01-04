@@ -1,7 +1,3 @@
-import "./polyfill";
-import { blob } from "node:stream/consumers";
-
-import { Readable } from "stream";
 import { utapi } from "uploadthing/server";
 
 export const uploadTransparent = async (inputUrl: string) => {
@@ -28,14 +24,11 @@ export const uploadTransparent = async (inputUrl: string) => {
     return { error: "unable to process image at this time" };
   }
 
-  const r = Readable.fromWeb(res.body as any);
+  const fileBlob = await res.blob();
 
   console.log("got file from remove bg");
 
-  const fileBlob = await blob(r);
-  const mockFile = new File([fileBlob as any], "transparent.png", {
-    type: "image/png",
-  });
+  const mockFile = Object.assign(fileBlob, { name: "transparent.png" });
 
   const uploadedFile = await utapi.uploadFiles(mockFile);
 
