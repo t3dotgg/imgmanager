@@ -21,15 +21,15 @@ export async function reprocessImages(images: string[]) {
 
   const results = toProcess.map(async (image) => {
     console.log("Sending image", image.id, image.fileKey);
-    const resp = await inngest.send({
+    return inngest.send({
       name: "gen/transparent",
       data: { imageUrl: image.originalUrl, fileKey: image.fileKey },
     });
-
-    return resp;
   });
 
-  console.log("RESULTS", results);
+  const awaitedResults = await Promise.all(results);
+
+  console.log("RESULTS", awaitedResults);
 
   return "done!";
 }
