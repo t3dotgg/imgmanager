@@ -2,7 +2,7 @@ import { uploadTransparent } from "@/app/api/uploadthing/make-transparent-file";
 import { db } from "@/db";
 import { uploadedImage } from "@/db/schema";
 import { eq } from "drizzle-orm";
-import { Inngest, NonRetriableError, slugify } from "inngest";
+import { Inngest, NonRetriableError, slugify, RetryAfterError } from "inngest";
 import { serve } from "inngest/next";
 
 // Create a client to send and receive events
@@ -29,6 +29,14 @@ const makeImageTransparent = inngest.createFunction(
 
     const transparent = await uploadTransparent(event.data.imageUrl);
     console.log("transparent response generated and uploaded", transparent);
+
+    if (transparent.error !== null) {
+      console.error("UNABLE TO UPLOAD TRANSPARENT IMAGE FILE", event);
+      throw new RetryAfterError(
+        "Unable to process and upload transparent image, retrying",
+        60 * 1000
+      );
+    }
 
     if (!transparent.data?.url) {
       console.error("UNABLE TO UPLOAD TRANSPARENT IMAGE FILE", event);

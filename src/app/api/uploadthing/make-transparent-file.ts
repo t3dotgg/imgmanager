@@ -25,7 +25,7 @@ export const uploadTransparent = async (inputUrl: string) => {
   if (!res.ok) {
     console.error("Got an error in response", res.status, res.statusText);
     console.error(await res.text());
-    throw new Error("Unable to process image");
+    return { error: "unable to process image at this time" };
   }
 
   const r = Readable.fromWeb(res.body as any);
