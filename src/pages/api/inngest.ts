@@ -15,6 +15,9 @@ const makeImageTransparent = inngest.createFunction(
       period: "60s",
       limit: 50,
     },
+    onFailure: (e) => {
+      console.log("gen/transparent failed", e.error);
+    },
   },
   { event: "gen/transparent" },
   async ({ event, step }) => {

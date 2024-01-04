@@ -11,7 +11,7 @@ export const uploadTransparent = async (inputUrl: string) => {
   formData.append("size", "auto");
   formData.append("image_url", inputUrl);
 
-  const { body } = await fetch("https://api.remove.bg/v1.0/removebg", {
+  const res = await fetch("https://api.remove.bg/v1.0/removebg", {
     method: "POST",
     body: formData,
     headers: {
@@ -22,7 +22,13 @@ export const uploadTransparent = async (inputUrl: string) => {
     },
   });
 
-  const r = Readable.fromWeb(body as any);
+  if (!res.ok) {
+    console.error("Got an error in response", res.status, res.statusText);
+    console.error(await res.text());
+    throw new Error("Unable to process image");
+  }
+
+  const r = Readable.fromWeb(res.body as any);
 
   console.log("got file from remove bg");
 
