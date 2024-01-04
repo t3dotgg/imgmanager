@@ -19,17 +19,17 @@ export async function reprocessImages(images: string[]) {
     .from(uploadedImage)
     .where(and(orgOrUser, inArray(uploadedImage.fileKey, images)));
 
-  const results = toProcess.map((image) => {
+  const inputs = toProcess.map((image) => {
     console.log("Sending image", image.id, image.fileKey);
-    return inngest.send({
+    return {
       name: "gen/transparent",
       data: { imageUrl: image.originalUrl, fileKey: image.fileKey },
-    });
+    };
   });
 
-  const awaitedResults = await Promise.all(results);
+  const results = await inngest.send(inputs);
 
-  console.log("RESULTS", awaitedResults);
+  console.log("RESULTS", results);
 
   return "done!";
 }
