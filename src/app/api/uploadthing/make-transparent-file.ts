@@ -1,4 +1,6 @@
-import { utapi } from "uploadthing/server";
+import { UTApi } from "uploadthing/server";
+
+const utapi = new UTApi();
 
 export const uploadTransparent = async (inputUrl: string) => {
   if (!process.env.REMOVEBG_KEY) throw new Error("No removebg key");

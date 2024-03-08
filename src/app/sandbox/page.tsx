@@ -1,3 +1,4 @@
+import { uploadTransparentAlt } from "../api/uploadthing/make-transparent-cheaper";
 import { uploadTransparent } from "../api/uploadthing/make-transparent-file";
 
 export const runtime = "nodejs";

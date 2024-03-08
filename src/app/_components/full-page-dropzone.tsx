@@ -76,14 +76,16 @@ const UploadingImage = (props: {
           return;
         }
         console.log("START: ", props.file.name);
-        uploadFiles({ files: [props.file], endpoint: "imageUploader" }).then(
-          () => {
-            startTransition(() => {
-              props.removeImage();
-              refresh();
-            });
-          }
-        );
+        uploadFiles("imageUploader", {
+          files: [props.file],
+          skipPolling: true,
+        }).then(() => {
+          console.log("done uploading", props.file.name);
+          startTransition(() => {
+            props.removeImage();
+            refresh();
+          });
+        });
       }, 400);
 
       return () => {
