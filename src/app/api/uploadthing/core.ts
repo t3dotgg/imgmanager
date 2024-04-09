@@ -1,6 +1,6 @@
 import { db } from "@/db";
 import { uploadedImage } from "@/db/schema";
-import { auth, currentUser } from "@clerk/nextjs";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { createUploadthing, type FileRouter } from "uploadthing/next";
 import { inngest } from "@/pages/api/inngest";
 

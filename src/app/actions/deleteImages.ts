@@ -2,7 +2,7 @@
 
 import { db } from "@/db";
 import { uploadedImage } from "@/db/schema";
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { and, eq, inArray } from "drizzle-orm";
 
 export async function deleteImages(images: string[]) {

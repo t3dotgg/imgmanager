@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { db } from ".";
 import { uploadedImage } from "./schema";
 import { and, desc, eq, isNull } from "drizzle-orm";

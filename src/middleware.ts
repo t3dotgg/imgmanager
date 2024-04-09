@@ -1,31 +1,11 @@
-import { authMiddleware } from "@clerk/nextjs/server";
+import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-// Set the paths that don't require the user to be signed in
-const publicRoutes = [
-  "/",
-  "/org(.*)",
-  "/sign-in",
-  "/sign-up",
-  "/api(.*)",
-  "/x(.*)",
-  "/info(.*)",
-  "/proxy(.*)",
-];
+const isProtectedRoute = createRouteMatcher(["/dashboard(.*)"]);
 
-export default authMiddleware({ publicRoutes });
+export default clerkMiddleware((auth, request) => {
+  if (isProtectedRoute(request)) auth().protect();
+});
 
-// Stop Middleware running on static files and public folder
 export const config = {
-  matcher: [
-    /*
-     * Match all request paths except for the ones starting with:
-     * - _next
-     * - static (static files)
-     * - favicon.ico (favicon file)
-     * - public folder
-     * - public folder
-     */
-    "/((?!static|.*\\..*|_next|favicon.ico).*)",
-    "/",
-  ],
+  matcher: ["/((?!.+\\.[\\w]+$|_next).*)", "/", "/(api|trpc)(.*)"],
 };
