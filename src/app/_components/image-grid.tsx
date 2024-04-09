@@ -32,12 +32,12 @@ export default function GroupedImageGrid(props: { images: ImageFromDb[] }) {
     <>
       {Object.keys(groupedImages).map((imageGroupDate) => (
         <React.Fragment key={imageGroupDate}>
-          <div className="flex w-full items-center py-4">
-            <div className="h-0 w-12 border-2"></div>
-            <h3 className="px-4 text-2xl font-bold">
+          <div className="flex w-full items-center px-4 py-8">
+            <div className="mx-4 h-0 w-12 border-b border-slate-300" />
+            <h3 className="text-2xl text-slate-300">
               {genTimestamp(imageGroupDate)}
             </h3>
-            <div className="h-0 flex-grow border-2"></div>
+            <div className="mx-4 h-0 flex-grow border-b border-slate-300" />
           </div>
           <ImageGrid>
             {groupedImages[imageGroupDate].map((rn) => (
