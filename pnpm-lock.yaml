@@ -9,8 +9,8 @@ dependencies:
     specifier: 5.0.0-beta.35
     version: 5.0.0-beta.35(eslint@8.44.0)(next@14.1.4)(react-dom@18.2.0)(react@18.2.0)(typescript@5.2.2)
   '@clerk/themes':
-    specifier: ^1.7.12
-    version: 1.7.12(react@18.2.0)
+    specifier: 2.0.0-beta.9
+    version: 2.0.0-beta.9(react-dom@18.2.0)(react@18.2.0)
   '@libsql/client':
     specifier: ^0.6.0
     version: 0.6.0
@@ -212,26 +212,28 @@ packages:
       swr: 2.2.0(react@18.2.0)
     dev: false
 
-  /@clerk/themes@1.7.12(react@18.2.0):
-    resolution: {integrity: sha512-puO5i91Da7IeTEw1qowce3K+6mOHnFSZ1UhSQsF9pYFUhp+j3WciwahxC4QnF6FL14jaS4XLZI/RUs66TuY+Hw==}
-    engines: {node: '>=14'}
+  /@clerk/themes@2.0.0-beta.9(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-KDQ6smpMJ8MGG/pZL6ukWF9Ux8rkCUb8u9AshptnWqZLOdXhZPBkjipuYAPHQRM9+0xgefou7/uPPBe4pLSqfA==}
+    engines: {node: '>=18.17.0'}
     peerDependencies:
-      react: '>=16'
+      react: '>=18'
+      react-dom: '>=18'
     dependencies:
-      '@clerk/types': 3.63.1
+      '@clerk/types': 4.0.0-beta.24
       react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
       tslib: 2.4.1
-    dev: false
-
-  /@clerk/types@3.63.1:
-    resolution: {integrity: sha512-PeZrRzWApJl1BYsT/wQPtEzhDmwfqeMKWuSRcHe3Kh0Itc5Gp7w9HrrKkyMnRuzebVj4z5gX4rwJOmTD/P1DhQ==}
-    engines: {node: '>=14'}
-    dependencies:
-      csstype: 3.1.1
     dev: false
 
   /@clerk/types@4.0.0-beta.21:
     resolution: {integrity: sha512-q3VWFkmU43r41yqX2YciIIObvLk5BqOVcz1rrko4uslOJPnb/tXOP02VEb/xRi6Kz/OqnHrM7nqY1OBrJ+3uog==}
+    engines: {node: '>=18.17.0'}
+    dependencies:
+      csstype: 3.1.1
+    dev: false
+
+  /@clerk/types@4.0.0-beta.24:
+    resolution: {integrity: sha512-+KHIPB3+vEfJwEaJWvCVokwQBsB7xtdbj3jMOXKEPjSMiRsv3rS3U44XoXk1Z2xA4G6HJYwed9KR2LslWDCJmQ==}
     engines: {node: '>=18.17.0'}
     dependencies:
       csstype: 3.1.1
