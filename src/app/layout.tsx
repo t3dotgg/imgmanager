@@ -8,7 +8,7 @@ export const metadata = {
   description: "A Thing For Images",
 };
 
-export const runtime = "edge";
+// export const runtime = "edge";
 
 export default function RootLayout({
   children,
