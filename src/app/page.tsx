@@ -14,7 +14,7 @@ async function Images() {
   return <LazyFullPageDropzone images={data} />;
 }
 
-// export const runtime = "edge";
+export const runtime = "edge";
 
 export default async function Home() {
   return (

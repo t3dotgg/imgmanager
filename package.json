@@ -30,6 +30,7 @@
     "eslint": "8.44.0",
     "eslint-config-next": "14.0.1",
     "inngest": "^3.7.4",
+    "libsql-stateless-easy": "^1.5.8",
     "next": "14.1.4",
     "postcss": "8.4.25",
     "react": "18.2.0",

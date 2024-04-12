@@ -1,5 +1,5 @@
 import { drizzle } from "drizzle-orm/libsql";
-import { createClient } from "@libsql/client";
+import { createClient } from "libsql-stateless-easy";
 
 import * as schema from "./schema";
 

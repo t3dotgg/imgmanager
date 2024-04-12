@@ -53,6 +53,9 @@ dependencies:
   inngest:
     specifier: ^3.7.4
     version: 3.7.4(typescript@5.2.2)
+  libsql-stateless-easy:
+    specifier: ^1.5.8
+    version: 1.5.8
   next:
     specifier: 14.1.4
     version: 14.1.4(react-dom@18.2.0)(react@18.2.0)
@@ -3605,6 +3608,17 @@ packages:
     dependencies:
       prelude-ls: 1.2.1
       type-check: 0.4.0
+
+  /libsql-stateless-easy@1.5.8:
+    resolution: {integrity: sha512-dCz1/UizHFqyVWhraPRWVF70Y2S4Fz7UdBoR0IYb2jCI685Gz6XAcc+iihBGPAa06zOHl1qmTc31k9KqhGt8oA==}
+    dependencies:
+      js-base64: 3.7.7
+      libsql-stateless: 2.7.6
+    dev: false
+
+  /libsql-stateless@2.7.6:
+    resolution: {integrity: sha512-3pcgf+ZfogpR2JtZtgYPgpmF/CzDxvfKu/ADEjSnjtarRNQxYJDLAJuZaaU9E9qHgYs1hrMMnNf3pjJMQJASmw==}
+    dev: false
 
   /libsql@0.3.10:
     resolution: {integrity: sha512-/8YMTbwWFPmrDWY+YFK3kYqVPFkMgQre0DGmBaOmjogMdSe+7GHm1/q9AZ61AWkEub/vHmi+bA4tqIzVhKnqzg==}
